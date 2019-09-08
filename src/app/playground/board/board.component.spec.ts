@@ -64,6 +64,66 @@ describe('BoardComponent', () => {
       expect(component.board[rowIndex][colIndex]).toEqual(board[rowIndex][colIndex]);
     });
   });
+
+  describe('Players alternate placing X’s and O’s on the board until a game is over(win or draw)', function(){
+
+    let rowIndex: number;
+    let colIndex: number;
+    let currentPlayer: squareEnum;
+    let board: squareEnum[][];
+
+    beforeEach (function(){
+      let square = fixture.debugElement.query(By.css('app-square'));
+      square.triggerEventHandler('click', null);
+    });
+
+    it('should toggle Players on every next move', function() {
+      spyOn(component, 'togglePlayer');
+      component.nextMove();
+      expect(component.togglePlayer).toHaveBeenCalled();
+    });
+
+    it('should allow Player `X` to play next if Player `O` played last', function() {
+      rowIndex = 0;
+      colIndex = 2;
+      currentPlayer = squareEnum.oPlayer;
+
+      board =  [
+        [squareEnum.xPlayer, squareEnum.EMPTY, squareEnum.EMPTY],
+        [squareEnum.EMPTY, currentPlayer, squareEnum.EMPTY],
+        [squareEnum.EMPTY, squareEnum.EMPTY, squareEnum.EMPTY]
+      ];
+
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.currentPlayer).toBe(squareEnum.xPlayer);
+      expect(component.gameResultMessage).toBe(`Player X\'s turn`);
+      expect(component.isGameOver).toBeFalsy();
+    });
+
+    it('should allow Player `O` to play next if Player `X` played last', function() {
+      rowIndex = 1;
+      colIndex = 0;
+
+      currentPlayer = squareEnum.xPlayer;
+      
+      board =  [
+        [squareEnum.xPlayer, squareEnum.EMPTY, squareEnum.xPlayer],
+        [squareEnum.EMPTY, squareEnum.oPlayer, squareEnum.EMPTY],
+        [squareEnum.EMPTY, squareEnum.EMPTY, squareEnum.EMPTY]
+      ];
+
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.currentPlayer).toBe(squareEnum.oPlayer);
+      expect(component.gameResultMessage).toBe(`Player O\'s turn`);
+      expect(component.isGameOver).toBeFalsy();
+    });
+  });
 });
 
 function firstRuleSetup(fixture: ComponentFixture<BoardComponent>, rowIndex: number, colIndex: number, component: BoardComponent) {
