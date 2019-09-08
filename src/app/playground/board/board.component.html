@@ -1,1 +1,13 @@
-<div></div>
+<div>
+    <div id="status" class="status text-center p-4">{{ gameResultMessage }}</div>
+        <div class="board"
+            *ngFor="let rowIndex of [0,1,2]">
+                <app-square 
+                            *ngFor="let colIndex of [0,1,2]"
+                            [rowIndex]="rowIndex"
+                            [colIndex]="colIndex"
+                            [squareItem]="board[rowIndex][colIndex]"
+                            (click)="updateBoard(rowIndex, colIndex)">
+                </app-square>
+        </div>
+</div>

@@ -1,0 +1,17 @@
+.board {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	color: white;
+}
+
+.status {
+	color: black;
+	font-weight: 1.4em;
+    text-align:center;
+    display:inline-block;
+    position:relative;
+	width:100%;
+	margin-bottom: 20px;
+}

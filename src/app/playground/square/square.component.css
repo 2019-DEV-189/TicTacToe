@@ -1,0 +1,26 @@
+.square {
+    width: 100px;
+    height: 100px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-size: 6em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.v1 {
+    border-right: 10px solid black;
+}
+
+.h1 {
+    border-bottom: 10px solid black;
+}
+
+.xColor {
+    color: blue;
+}
+
+.oColor {
+    color: red;
+}

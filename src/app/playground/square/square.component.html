@@ -1,1 +1,4 @@
-<div></div>
+<div class='square' align-middle
+    [ngClass]="{'v1': colIndex !==2, 'h1': rowIndex !==2, 'xColor': squareItem === 'X', 'oColor': squareItem === 'O'}">
+    {{squareItem}}
+</div>
