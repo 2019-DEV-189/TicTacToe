@@ -39,10 +39,11 @@ export class BoardComponent implements OnInit {
   updateBoard(rowIndex: number, colIndex: number): void {
     if (!this.isGameOver && this.board[rowIndex][colIndex] === squareEnum.EMPTY) {
       this.board[rowIndex][colIndex] = this.currentPlayer;
-      if (this.isTriplet()) {
+      if (this.isBoardFull()) {
         this.isGameOver = true;
       }
-      else if (this.isBoardFull()) {
+      else if (this.isWon()) {
+        this.gameResultMessage = `Player ${this.currentPlayer} wins!`;
         this.isGameOver = true;
       }
       else {
@@ -106,5 +107,9 @@ export class BoardComponent implements OnInit {
       }
     }
     return !this.isTriplet();
+  }
+
+  isWon(): boolean {
+    return this.isTriplet();
   }
 }
