@@ -35,6 +35,16 @@ export class BoardComponent implements OnInit {
   updateBoard(rowIndex: number, colIndex: number): void {
     if (this.board[rowIndex][colIndex] === squareEnum.EMPTY) {
       this.board[rowIndex][colIndex] = this.currentPlayer;
+      this.nextMove();
     }
+  }
+
+  nextMove(): void {
+    this.togglePlayer();
+  }
+
+  togglePlayer(): void {
+    this.currentPlayer = this.currentPlayer === squareEnum.xPlayer ? squareEnum.oPlayer : squareEnum.xPlayer;
+    this.gameResultMessage = `Player ${this.currentPlayer}'s turn`;
   }
 }
