@@ -203,6 +203,61 @@ describe('BoardComponent', () => {
       expect(component.isBoardFull()).toBeFalsy();
     });
   });
+
+  describe('If a player is able to draw three X’s or three O’s in a row, that player wins.', function(){
+
+    let rowIndex: number;
+    let colIndex: number;
+    let currentPlayer: squareEnum;
+    let board: squareEnum[][];
+
+    beforeEach (function(){
+      let square = fixture.debugElement.query(By.css('app-square'));
+      square.triggerEventHandler('click', null);
+    });
+
+    it('should be a win if Player `X` draws three in a row', function() {
+      rowIndex = 1;
+      colIndex = 2;
+
+      currentPlayer = squareEnum.xPlayer;
+      
+      board =  [
+        [squareEnum.xPlayer, squareEnum.EMPTY, squareEnum.xPlayer],
+        [squareEnum.oPlayer, squareEnum.oPlayer, squareEnum.EMPTY],
+        [squareEnum.xPlayer, squareEnum.oPlayer, squareEnum.xPlayer]
+      ];
+
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isWon()).toBeTruthy();
+      expect(component.gameResultMessage).toBe(`Player X wins!`);
+      expect(component.isGameOver).toBeTruthy();
+    });
+
+    it('should be a win if Player `O` draws three in a row', function() {
+      rowIndex = 0;
+      colIndex = 1;
+
+      currentPlayer = squareEnum.oPlayer;
+      
+      board =  [
+        [squareEnum.xPlayer, squareEnum.EMPTY, squareEnum.xPlayer],
+        [squareEnum.oPlayer, squareEnum.oPlayer, squareEnum.EMPTY],
+        [squareEnum.xPlayer, squareEnum.oPlayer, squareEnum.xPlayer]
+      ];
+
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isWon()).toBeTruthy();
+      expect(component.gameResultMessage).toBe(`Player O wins!`);
+      expect(component.isGameOver).toBeTruthy();
+    });
+  });
 });
 
 function firstRuleSetup(fixture: ComponentFixture<BoardComponent>, rowIndex: number, colIndex: number, component: BoardComponent) {
