@@ -50,6 +50,20 @@ describe('BoardComponent', () => {
       expect(component.board[rowIndex][colIndex]).not.toEqual(squareEnum.oPlayer);
     });
   });
+
+  describe('Players cannot play on a played position', function() {
+    let rowIndex: number;
+    let colIndex: number;
+    let board: squareEnum[][];
+
+    beforeEach (function() {
+      ({ rowIndex, colIndex, board } = secondRuleSetup(fixture, rowIndex, colIndex, board, component));
+    });
+
+    it('should not let player to update the board on a played position', function() {
+      expect(component.board[rowIndex][colIndex]).toEqual(board[rowIndex][colIndex]);
+    });
+  });
 });
 
 function firstRuleSetup(fixture: ComponentFixture<BoardComponent>, rowIndex: number, colIndex: number, component: BoardComponent) {
@@ -65,4 +79,21 @@ function firstRuleSetup(fixture: ComponentFixture<BoardComponent>, rowIndex: num
   component.updateBoard(rowIndex, colIndex);
   fixture.detectChanges();
   return { rowIndex, colIndex };
+}
+
+function secondRuleSetup(fixture: ComponentFixture<BoardComponent>, rowIndex: number, colIndex: number, board: squareEnum[][], component: BoardComponent) {
+  let square = fixture.debugElement.query(By.css('app-square'));
+  rowIndex = 0;
+  colIndex = 0;
+  board = [
+    [squareEnum.xPlayer, squareEnum.xPlayer, squareEnum.EMPTY],
+    [squareEnum.EMPTY, squareEnum.oPlayer, squareEnum.EMPTY],
+    [squareEnum.EMPTY, squareEnum.oPlayer, squareEnum.EMPTY]
+  ];
+  component.board = board;
+  component.currentPlayer = squareEnum.oPlayer;
+  square.triggerEventHandler('click', null);
+  component.updateBoard(rowIndex, colIndex);
+  fixture.detectChanges();
+  return { rowIndex, colIndex, board };
 }
