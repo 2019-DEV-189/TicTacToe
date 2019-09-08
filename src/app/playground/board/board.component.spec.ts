@@ -123,6 +123,66 @@ describe('BoardComponent', () => {
       expect(component.gameResultMessage).toBe(`Player O\'s turn`);
       expect(component.isGameOver).toBeFalsy();
     });
+
+    it('should continue game if no player has three in a row horizontally', function() {
+      rowIndex = 2;
+      colIndex = 2;
+
+      currentPlayer = squareEnum.oPlayer;
+      
+      board =  [
+        [squareEnum.xPlayer, squareEnum.EMPTY, squareEnum.xPlayer],
+        [squareEnum.oPlayer, squareEnum.oPlayer, squareEnum.EMPTY],
+        [squareEnum.EMPTY, squareEnum.EMPTY, squareEnum.EMPTY]
+      ];
+
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isHorizontalTriplet()).toBeFalsy();
+      expect(component.isGameOver).toBeFalsy();
+    });
+
+    it('should continue game if no player has three in a row vertically', function() {
+      rowIndex = 2;
+      colIndex = 1;
+
+      currentPlayer = squareEnum.xPlayer;
+      
+      board =  [
+        [squareEnum.xPlayer, squareEnum.EMPTY, squareEnum.xPlayer],
+        [squareEnum.oPlayer, squareEnum.oPlayer, squareEnum.EMPTY],
+        [squareEnum.EMPTY, squareEnum.EMPTY, squareEnum.xPlayer]
+      ];
+
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isVerticalTriplet()).toBeFalsy();
+      expect(component.isGameOver).toBeFalsy();
+    });
+
+    it('should continue game if no player has three in a row diagonally', function() {
+      rowIndex = 2;
+      colIndex = 0;
+
+      currentPlayer = squareEnum.oPlayer;
+      
+      board =  [
+        [squareEnum.xPlayer, squareEnum.EMPTY, squareEnum.xPlayer],
+        [squareEnum.oPlayer, squareEnum.oPlayer, squareEnum.EMPTY],
+        [squareEnum.EMPTY, squareEnum.oPlayer, squareEnum.xPlayer]
+      ];
+
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isDiagonalTriplet()).toBeFalsy();
+      expect(component.isGameOver).toBeFalsy();
+    });
   });
 });
 
