@@ -183,6 +183,25 @@ describe('BoardComponent', () => {
       expect(component.isDiagonalTriplet()).toBeFalsy();
       expect(component.isGameOver).toBeFalsy();
     });
+
+    it('should continue game if all 9 squares are not filled yet', function() {
+      rowIndex = 1;
+      colIndex = 2;
+
+      currentPlayer = squareEnum.xPlayer;
+      
+      board =  [
+        [squareEnum.xPlayer, squareEnum.EMPTY, squareEnum.xPlayer],
+        [squareEnum.oPlayer, squareEnum.oPlayer, squareEnum.EMPTY],
+        [squareEnum.xPlayer, squareEnum.oPlayer, squareEnum.xPlayer]
+      ];
+
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isBoardFull()).toBeFalsy();
+    });
   });
 });
 
