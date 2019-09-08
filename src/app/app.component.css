@@ -1,0 +1,16 @@
+.main-app {
+	margin: 0;
+    background: white;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.title {
+    text-align:center;
+    display:inline-block;
+    position:relative;
+    width:100%;
+}
