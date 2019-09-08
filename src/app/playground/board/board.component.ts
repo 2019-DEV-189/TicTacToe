@@ -19,7 +19,6 @@ export class BoardComponent implements OnInit {
     this.utilService = utilService;
   }
 
-
   ngOnInit() {
     this.newGame();
   }
@@ -41,6 +40,9 @@ export class BoardComponent implements OnInit {
     if (!this.isGameOver && this.board[rowIndex][colIndex] === squareEnum.EMPTY) {
       this.board[rowIndex][colIndex] = this.currentPlayer;
       if (this.isTriplet()) {
+        this.isGameOver = true;
+      }
+      else if (this.isBoardFull()) {
         this.isGameOver = true;
       }
       else {
@@ -93,5 +95,16 @@ export class BoardComponent implements OnInit {
 
   isRightDiagonalTriplet(): boolean {
     return this.utilService.checkEquality(this.board[0][2], this.board[1][1], this.board[2][0]);
+  }
+
+  isBoardFull(): boolean {
+    for (const colArray of this.board){
+      for (const squareItem of colArray){
+        if (squareItem === squareEnum.EMPTY){
+          return false;
+        }
+      }
+    }
+    return !this.isTriplet();
   }
 }
