@@ -33,6 +33,8 @@ export class BoardComponent implements OnInit {
   }
 
   updateBoard(rowIndex: number, colIndex: number): void {
-    this.board[rowIndex][colIndex] = this.currentPlayer;
+    if (this.board[rowIndex][colIndex] === squareEnum.EMPTY) {
+      this.board[rowIndex][colIndex] = this.currentPlayer;
+    }
   }
 }
