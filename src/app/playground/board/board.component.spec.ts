@@ -258,6 +258,59 @@ describe('BoardComponent', () => {
       expect(component.isGameOver).toBeTruthy();
     });
   });
+
+  describe('If all nine squares are filled and neither player has three in a row, the game is a draw.', function(){
+
+    let rowIndex: number;
+    let colIndex: number;
+    let currentPlayer: squareEnum;
+    let board: squareEnum[][];
+
+    beforeEach (function(){
+      let square = fixture.debugElement.query(By.css('app-square'));
+      square.triggerEventHandler('click', null);
+    });
+
+    it('should be a draw if Player `X` doesn`t have three in a row and board is full', function() {
+
+      rowIndex = 0;
+      colIndex = 2;
+
+      board =  [
+        [squareEnum.oPlayer, squareEnum.oPlayer, squareEnum.EMPTY],
+        [squareEnum.xPlayer, squareEnum.xPlayer, squareEnum.oPlayer],
+        [squareEnum.oPlayer, squareEnum.xPlayer, squareEnum.xPlayer]
+      ];
+
+      component.board = board;
+      component.currentPlayer = squareEnum.xPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isDraw()).toBeTruthy();
+      expect(component.gameResultMessage).toBe(`It\'s a Draw!`);
+      expect(component.isGameOver).toBeTruthy();
+    });
+
+    it('should be a draw if Player `O` doesn`t have three in a row and board is full', function() {
+
+      rowIndex = 1;
+      colIndex = 2;
+
+      board =  [
+        [squareEnum.oPlayer, squareEnum.oPlayer, squareEnum.xPlayer],
+        [squareEnum.xPlayer, squareEnum.xPlayer, squareEnum.EMPTY],
+        [squareEnum.oPlayer, squareEnum.xPlayer, squareEnum.xPlayer]
+      ];
+
+      component.currentPlayer = squareEnum.oPlayer;
+      component.board = board;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isDraw()).toBeTruthy();
+      expect(component.gameResultMessage).toBe(`It\'s a Draw!`);
+      expect(component.isGameOver).toBeTruthy();
+    });
+  });
 });
 
 function firstRuleSetup(fixture: ComponentFixture<BoardComponent>, rowIndex: number, colIndex: number, component: BoardComponent) {
